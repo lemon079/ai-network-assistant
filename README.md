@@ -1,8 +1,12 @@
 # AI Network Assistant
 
-An AI-powered chatbot that helps you manage and monitor your home router through natural language conversations. Built with Next.js, LangGraph, and supports multiple AI providers (Gemini, Ollama).
+An AI-powered chatbot that helps you manage and monitor your home router through natural language conversations. Just tell the AI what you need, and it handles the rest.
 
-## Features
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
+![LangGraph](https://img.shields.io/badge/LangGraph-Agent-orange)
+
+## ✨ Features
 
 ### 🔍 Network Monitoring
 
@@ -11,122 +15,153 @@ An AI-powered chatbot that helps you manage and monitor your home router through
 - Monitor WiFi and LAN statistics
 - View DHCP leases and ARP tables
 
-### ⚙️ Router Settings
+### ⚙️ Router Control
 
-- **WiFi Management**
-  - Change WiFi name (SSID)
-  - Change WiFi password
-  - Enable/disable WiFi
-  - Change WiFi channel
-- **View Advanced Settings**
-  - Parental controls
-  - QoS settings
-  - Firewall status
-  - Dynamic DNS configuration
+- **WiFi Management**: Change SSID, password, enable/disable, change channel
+- **Device Blocking**: Block/unblock devices by MAC address
+- **Port Forwarding**: Add port forwarding rules
+- **QoS**: Enable/disable Quality of Service
+- **DHCP**: Enable/disable DHCP server
+- **Router Reboot**: Restart the router remotely
 
-### 🤖 AI Capabilities
+### 🛡️ Safety & Security
 
-- Natural language interface
-- Technical and non-technical response modes
-- Safety guardrails (blocks dangerous requests)
 - Confirmation required for destructive actions
+- Input guardrails block dangerous requests
+- Session-based authentication via httpOnly cookies
+- Password validation (8-63 characters)
+- Output sanitization redacts sensitive data
 
-## Quick Start
+### 🤖 AI Features
+
+- Natural language interface - just talk normally
+- Real-time response streaming (word-by-word)
+- Reasoning trace shows what the AI is doing
+- Politely redirects off-topic questions
+- Multiple AI providers (Gemini, Ollama)
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 18+
-- PostgreSQL database (NeonDB recommended)
-- Ollama running locally (or Gemini API key)
+- Ollama running locally OR Gemini API key
 
 ### Installation
 
 ```bash
 # Clone and install
-git clone <repository-url>
-cd ai-network-assistant
+git clone https://github.com/lemon079/ai-network-agent.git
+cd ai-network-agent
 npm install
-
-# Setup database
-npx prisma generate
-npx prisma db push
-
-# Configure environment
-cp .env.example .env.local
 ```
 
 ### Environment Variables
 
-```env
-# Database
-DATABASE_URL="postgresql://..."
+Create a `.env.local` file:
 
+```env
 # AI Provider (choose one)
+
+# Option 1: Ollama (local, free)
 LLM_PROVIDER=ollama
-LLM_MODEL=gpt-oss:20b-cloud
+LLM_MODEL=llama3.2
 OLLAMA_BASE_URL=http://localhost:11434
 
-# Or use Gemini
+# Option 2: Gemini (cloud, requires API key)
 # LLM_PROVIDER=gemini
-# GOOGLE_GENERATIVE_AI_API_KEY=your-key
+# LLM_MODEL=gemini-2.0-flash
+# GOOGLE_GENERATIVE_AI_API_KEY=your-key-here
 ```
 
 ### Running
 
 ```bash
-# Development
 npm run dev
-
-# Production
-npm run build
-npm start
 ```
 
-## Usage
+Open [http://localhost:3000](http://localhost:3000)
 
-1. **Login to Router**: Navigate to `/setup` and enter your router credentials
-2. **Start Chatting**: Go to `/chat` and ask questions like:
+## 📖 Usage
+
+1. **Connect Router**: Go to `/setup` and enter your router IP and credentials
+2. **Start Chatting**: You'll be redirected to `/chat` automatically
+3. **Ask Questions**: Try these:
    - "How many devices are connected?"
-   - "What's my internet speed?"
-   - "Change my WiFi password to NewPassword123"
-   - "Is the firewall enabled?"
+   - "Show me my WiFi settings"
+   - "What's the signal quality?"
+   - "Block the device with MAC AA:BB:CC:DD:EE:FF"
+   - "Change my WiFi password to SecurePass123"
 
-## Supported Routers
-
-Currently supports:
-
-- **PTCL DSL-226** (and similar models)
-
-## Architecture
+## 🏗️ Architecture
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
-│   Frontend  │────▶│   API Route  │────▶│  LangGraph Agent│
-│  (Next.js)  │     │  /api/chat   │     │  (Tools + LLM)  │
+│   Next.js   │────▶│  /api/chat   │────▶│  LangGraph      │
+│   Frontend  │ SSE │   (SSE)      │     │  Agent + Tools  │
 └─────────────┘     └──────────────┘     └────────┬────────┘
                                                    │
                     ┌──────────────┐     ┌─────────▼────────┐
-                    │   Database   │◀────│  Router Adapter  │
-                    │   (Prisma)   │     │  (axios+cheerio) │
+                    │   Session    │◀────│  Router Adapter  │
+                    │   (Cookie)   │     │  (axios+cheerio) │
                     └──────────────┘     └──────────────────┘
 ```
 
-## AI Providers
+**Key Components:**
 
-Switch providers easily in `lib/chat/llm-provider.ts`:
+- `lib/adapters/ptcl.ts` - Router communication layer
+- `lib/chat/stream-agent.ts` - LangGraph agent with streaming
+- `lib/chat/tools.ts` - LangChain tools for router actions
+- `lib/chat/guardrails.ts` - Safety checks and redactions
+
+## 🔌 Supported Routers
+
+| Router | Status |
+|--------|--------|
+| PTCL DSL-226 | ✅ Full Support |
+| Similar ZTE models | ✅ Should work |
+
+*More router adapters can be added in `lib/adapters/`*
+
+## 🤖 AI Providers
 
 | Provider | Models | Notes |
 |----------|--------|-------|
-| **Ollama** | gpt-oss:20b-cloud | Local, free |
-| **Gemini** | gemini-2.5-flash | Cloud, API key required |
+| **Ollama** | llama3.2, mistral, codellama | Free, runs locally |
+| **Gemini** | gemini-2.0-flash, gemini-1.5-pro | Fast, requires API key |
 
-## Safety Features
+Switch providers in `.env.local` or `lib/chat/llm-provider.ts`
 
-- **Input Guardrails**: Blocks hacking/exploit requests
-- **Confirmation Required**: For WiFi changes, restart
-- **Password Validation**: 8-63 character requirement
-- **Output Sanitization**: Redacts sensitive data
+## 📁 Project Structure
 
-## License
+```
+├── app/
+│   ├── api/
+│   │   ├── auth/          # Auth check & logout
+│   │   ├── chat/          # SSE chat endpoint
+│   │   └── setup/         # Router detection & login
+│   ├── chat/              # Chat page (protected)
+│   └── setup/             # Router login page
+├── components/
+│   └── chat/              # Chat UI components
+├── lib/
+│   ├── adapters/          # Router adapters
+│   │   ├── ptcl.ts        # PTCL router implementation
+│   │   └── types.ts       # TypeScript interfaces
+│   ├── chat/              # AI agent logic
+│   │   ├── stream-agent.ts
+│   │   ├── tools.ts
+│   │   ├── guardrails.ts
+│   │   └── prompts.ts
+│   └── router/            # Session management
+└── docs/
+    └── TEST_PROMPTS.md    # Example prompts for testing
+```
+
+## 🧪 Testing
+
+See [docs/TEST_PROMPTS.md](docs/TEST_PROMPTS.md) for a list of prompts to test all features.
+
+## 📝 License
 
 MIT
