@@ -1,5 +1,5 @@
 // ============ ROUTER TYPES ============
-// Type definitions for PTCL Router Adapter
+// Type definitions for ZTE Router Adapter
 
 // Status Interfaces
 export interface DeviceInfo {

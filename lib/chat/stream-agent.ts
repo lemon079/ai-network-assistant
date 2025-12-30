@@ -3,7 +3,7 @@ import { ToolNode } from '@langchain/langgraph/prebuilt';
 import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from '@langchain/core/messages';
 import { createRouterTools } from './tools';
 import { createLocalMachineTools } from './local-machine-tools';
-import { PTCLRouterAdapter } from '@/lib/adapters/ptcl';
+import { ZTERouterAdapter } from '@/lib/adapters/zte';
 import { runInputGuardrails, sanitizeOutput, maskToolNames } from './guardrails';
 import { createLLMWithTools, getActiveProvider, getActiveModel, LLMProvider } from './llm-provider';
 
@@ -33,7 +33,7 @@ function createAgentGraph(options: AgentOptions = {}) {
     } = options;
 
     // Create the router adapter and tools
-    const adapter = new PTCLRouterAdapter(routerIp, sessionCookie);
+    const adapter = new ZTERouterAdapter(routerIp, sessionCookie);
     const routerTools = createRouterTools(adapter);
 
     // Create local machine tools (no router required)

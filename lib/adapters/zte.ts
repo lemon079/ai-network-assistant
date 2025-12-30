@@ -33,7 +33,7 @@ import type {
 
 // ============ ADAPTER CLASS ============
 
-export class PTCLRouterAdapter {
+export class ZTERouterAdapter {
     private ip: string;
     private sessionCookie: string;
     private client: AxiosInstance;
@@ -63,7 +63,7 @@ export class PTCLRouterAdapter {
             }
             return response.data;
         } catch (error: any) {
-            console.error(`[PTCL Adapter] Failed to fetch ${path}:`, error.message);
+            console.error(`[ZTE Adapter] Failed to fetch ${path}:`, error.message);
             throw error;
         }
     }
@@ -730,7 +730,7 @@ export class PTCLRouterAdapter {
             }));
             return true;
         } catch (error) {
-            console.error('[PTCL Adapter] Failed to restart:', error);
+            console.error('[ZTE Adapter] Failed to restart:', error);
             return false;
         }
     }
@@ -878,7 +878,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: 'WiFi settings updated successfully' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to update WiFi settings:', error);
+            console.error('[ZTE Adapter] Failed to update WiFi settings:', error);
             return { success: false, message: error.message || 'Failed to update WiFi settings' };
         }
     }
@@ -976,7 +976,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: 'LAN settings updated successfully' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to update LAN settings:', error);
+            console.error('[ZTE Adapter] Failed to update LAN settings:', error);
             return { success: false, message: error.message || 'Failed to update LAN settings' };
         }
     }
@@ -1069,7 +1069,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: 'WAN settings updated successfully' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to update WAN settings:', error);
+            console.error('[ZTE Adapter] Failed to update WAN settings:', error);
             return { success: false, message: error.message || 'Failed to update WAN settings' };
         }
     }
@@ -1129,7 +1129,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: `Port forwarding rule "${options.name}" added successfully` };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to add port forwarding rule:', error);
+            console.error('[ZTE Adapter] Failed to add port forwarding rule:', error);
             return { success: false, message: error.message || 'Failed to add port forwarding rule' };
         }
     }
@@ -1148,7 +1148,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: `Port forwarding rule at index ${ruleIndex} deleted` };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to delete port forwarding rule:', error);
+            console.error('[ZTE Adapter] Failed to delete port forwarding rule:', error);
             return { success: false, message: error.message || 'Failed to delete port forwarding rule' };
         }
     }
@@ -1211,7 +1211,7 @@ export class PTCLRouterAdapter {
                 message: `MAC address ${options.macAddress} ${options.action === 'block' ? 'blocked' : 'allowed'}`
             };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to set MAC filter:', error);
+            console.error('[ZTE Adapter] Failed to set MAC filter:', error);
             return { success: false, message: error.message || 'Failed to set MAC filter' };
         }
     }
@@ -1244,7 +1244,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: `MAC filter rule at index ${ruleIndex} deleted` };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to delete MAC filter:', error);
+            console.error('[ZTE Adapter] Failed to delete MAC filter:', error);
             return { success: false, message: error.message || 'Failed to delete MAC filter' };
         }
     }
@@ -1276,7 +1276,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: enabled ? 'QoS enabled successfully' : 'QoS disabled' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to toggle QoS:', error);
+            console.error('[ZTE Adapter] Failed to toggle QoS:', error);
             return { success: false, message: error.message || 'Failed to toggle QoS' };
         }
     }
@@ -1302,7 +1302,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: `QoS discipline set to ${discipline}` };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to set QoS discipline:', error);
+            console.error('[ZTE Adapter] Failed to set QoS discipline:', error);
             return { success: false, message: error.message || 'Failed to set QoS discipline' };
         }
     }
@@ -1356,7 +1356,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: 'QoS rule added successfully' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to add QoS rule:', error);
+            console.error('[ZTE Adapter] Failed to add QoS rule:', error);
             return { success: false, message: error.message || 'Failed to add QoS rule' };
         }
     }
@@ -1375,7 +1375,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: `QoS rule ${ruleIndex} deleted` };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to delete QoS rule:', error);
+            console.error('[ZTE Adapter] Failed to delete QoS rule:', error);
             return { success: false, message: error.message || 'Failed to delete QoS rule' };
         }
     }
@@ -1403,7 +1403,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: 'Admin password changed successfully. Remember to update your login credentials.' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to change admin password:', error);
+            console.error('[ZTE Adapter] Failed to change admin password:', error);
             return { success: false, message: error.message || 'Failed to change admin password' };
         }
     }
@@ -1451,7 +1451,7 @@ export class PTCLRouterAdapter {
 
             return { success: true, message: options.enabled ? 'Dynamic DNS enabled successfully' : 'Dynamic DNS disabled' };
         } catch (error: any) {
-            console.error('[PTCL Adapter] Failed to configure DDNS:', error);
+            console.error('[ZTE Adapter] Failed to configure DDNS:', error);
             return { success: false, message: error.message || 'Failed to configure Dynamic DNS' };
         }
     }
@@ -1681,7 +1681,7 @@ export class PTCLRouterAdapter {
                     }
                 }
             } catch {
-                console.log(`[PTCL Crawler] Skipped: ${url}`);
+                console.log(`[ZTE Crawler] Skipped: ${url}`);
             }
         };
 

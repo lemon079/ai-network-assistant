@@ -1,5 +1,5 @@
 // Script to fetch HTML from advanced settings pages using DB session
-import { PTCLRouterAdapter } from '../lib/adapters/ptcl';
+import { ZTERouterAdapter } from '../lib/adapters/zte';
 import { prisma } from '../prisma/prisma';
 
 async function main() {
@@ -18,7 +18,7 @@ async function main() {
 
     console.log(`Using session for router: ${session.routerIp}`);
 
-    const adapter = new PTCLRouterAdapter(session.routerIp, sessionCookie);
+    const adapter = new ZTERouterAdapter(session.routerIp, sessionCookie);
 
     const endpoints = [
         { name: 'WiFi Basic', path: '/cgi-bin/wlan_basic.asp' },

@@ -7,9 +7,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/router/session-manager';
-import { PTCLRouterAdapter } from '@/lib/adapters/ptcl';
+import { ZTERouterAdapter } from '@/lib/adapters/zte';
 
-// Settings pages to fetch (common PTCL router pages)
+// Settings pages to fetch (common ZTE router pages)
 const SETTINGS_PAGES = [
     // Basic Settings
     '/cgi-bin/home_lan.asp',           // LAN/DHCP settings
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
 
         // Create adapter
         const cookieString = session.cookies.map(c => `${c.name}=${c.value}`).join('; ');
-        const adapter = new PTCLRouterAdapter(session.routerIp, cookieString);
+        const adapter = new ZTERouterAdapter(session.routerIp, cookieString);
 
         // Results
         const results: {

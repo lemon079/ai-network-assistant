@@ -1,6 +1,6 @@
 import { tool } from '@langchain/core/tools';
 import { z } from 'zod';
-import { PTCLRouterAdapter } from '@/lib/adapters/ptcl';
+import { ZTERouterAdapter } from '@/lib/adapters/zte';
 
 // Helper to format tool errors with session expiration detection
 function formatToolError(error: any, operation: string): string {
@@ -14,7 +14,7 @@ function formatToolError(error: any, operation: string): string {
 }
 
 // Factory to create tools with a specific adapter instance
-export function createRouterTools(adapter: PTCLRouterAdapter) {
+export function createRouterTools(adapter: ZTERouterAdapter) {
     const getDeviceInfo = tool(
         async () => {
             try {

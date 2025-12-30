@@ -109,7 +109,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 **Key Components:**
 
-- `lib/adapters/ptcl.ts` - Router communication layer
+- `lib/adapters/zte.ts` - Router communication layer
 - `lib/chat/stream-agent.ts` - LangGraph agent with streaming
 - `lib/chat/tools.ts` - LangChain tools for router actions
 - `lib/chat/guardrails.ts` - Safety checks and redactions
@@ -118,7 +118,7 @@ Open [http://localhost:3000](http://localhost:3000)
 
 | Router | Status |
 |--------|--------|
-| PTCL DSL-226 | ✅ Full Support |
+| ZTE DSL-226 | ✅ Full Support |
 | Similar ZTE models | ✅ Should work |
 
 *More router adapters can be added in `lib/adapters/`*
@@ -146,7 +146,7 @@ Switch providers in `.env.local` or `lib/chat/llm-provider.ts`
 │   └── chat/              # Chat UI components
 ├── lib/
 │   ├── adapters/          # Router adapters
-│   │   ├── ptcl.ts        # PTCL router implementation
+│   │   ├── zte.ts         # ZTE router implementation
 │   │   └── types.ts       # TypeScript interfaces
 │   ├── chat/              # AI agent logic
 │   │   ├── stream-agent.ts
