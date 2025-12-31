@@ -98,5 +98,5 @@ export function getActiveModel(): string {
  */
 export function createLLMWithTools(tools: any[], config?: Partial<LLMConfig>) {
     const llm = createLLM(config);
-    return llm.bindTools(tools);
+    return llm.bindTools!(tools);
 }
